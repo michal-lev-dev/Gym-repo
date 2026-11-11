@@ -170,6 +170,28 @@ This project is a web-based Gym Management System that allows both administrator
 git clone https://github.com/furkankayam/fullstack-gym-iot-app.git
 ```
 
+### Docker environment and secrets
+
+Docker Compose reads service-specific configuration from `.env.backend`,
+`.env.postgres`, and `.env.adminer` in the repository root. These files are
+ignored by Git. Create them from the matching `.example` files:
+
+```bash
+cp .env.backend.example .env.backend
+cp .env.postgres.example .env.postgres
+cp .env.adminer.example .env.adminer
+```
+
+Set strong, matching PostgreSQL passwords in `.env.backend` and `.env.postgres`.
+Set a new SMTP app password and a random Base64-encoded 64-byte `JWT_KEY` in
+`.env.backend`; changing the JWT key invalidates existing tokens.
+
+The PostgreSQL image only applies `POSTGRES_PASSWORD` when initializing an
+empty data volume. For an existing volume, update the database role password
+before changing the matching environment values and restarting the backend.
+Credentials previously committed to the repository should be rotated; removing
+them from the current files does not remove them from Git history.
+
 <br>
 
 ### Settings
